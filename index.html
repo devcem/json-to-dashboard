@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>JSON to Dashboard</title>
+
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="js/app.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="container">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">JSON to Dashboard</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li v-for="page in pages" :class="{'active' : page.name == currentPage}" v-on:click="callPage(page)"><a href="javascript:;">{{page.name}}</a></li>
+                    </ul>
+                </nav>
+
+                <div class="alert alert-info" v-if="alert.display">
+                    {{alert.message}}
+                </div>
+
+                <div id="form" v-if="currentPage.type == 'Form'">
+                    <div class="form-group" v-for="form in currentPage.form">
+                        <div class="input" v-if="form.type == 'text'">
+                            <label>{{form.name}}</label>
+                            <input type="text" class="form-control" v-model="form.value">
+                        </div>
+                        <div class="input" v-if="form.type == 'textarea'">
+                            <label>{{form.name}}</label>
+                            <textarea class="form-control" v-model="form.value"></textarea>
+                        </div>
+                        <div class="input" v-if="form.type == 'select'">
+                            <label>{{form.name}}</label>
+                            <select class="form-control" v-model="form.value">
+                                <option v-for="option in form.options" :value="option.value">{{option.label}}</option>
+                            </select>
+                        </div>
+                        <div class="input" v-if="form.type == 'checkbox'">
+                            <label>{{form.name}}</label>
+                            <div class="checkbox" v-for="option in form.options">
+                                <label><input type="checkbox" v-model="option.value">{{option.label}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/app.js"></script>
+    </body>
+</html>
